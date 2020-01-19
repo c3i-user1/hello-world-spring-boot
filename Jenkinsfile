@@ -77,8 +77,6 @@ stage('DeployToProduction') {
                 branch 'master'
             }
             steps {
-                input 'Deploy to Production?'
-                milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'ssh-user1', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     script {
                         sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull sw3:5000/hello-test:latest\""
