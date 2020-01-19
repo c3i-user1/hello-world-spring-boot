@@ -16,13 +16,13 @@ stage('DeployToStaging') {
                 branch 'master'
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'user-swa', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'ssh-user1', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                     sshPublisher(
                         failOnError: true,
                         continueOnError: false,
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'c3i',
+                                configName: 'user1',
                                 sshCredentials: [
                                     username: "$USERNAME",
                                     encryptedPassphrase: "$USERPASS"
@@ -31,7 +31,7 @@ stage('DeployToStaging') {
                                     sshTransfer(
                                         sourceFiles: 'target/*.jar',
                                         removePrefix: 'target',
-                                        remoteDirectory: '/home/swa/swjar/',
+                                        remoteDirectory: '/home/user1/swjar/',
                                         execCommand: 'echo hello'
                                     )
                                 ]
